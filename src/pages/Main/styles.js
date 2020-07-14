@@ -8,7 +8,7 @@ export const Row = styled.div`
       flex: 1;
     }
 
-    div + div {
+    > div + div {
       flex: 3;
       margin-left: 40px;
     }

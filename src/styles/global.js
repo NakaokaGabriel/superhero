@@ -10,15 +10,15 @@ export default createGlobalStyle`
 
   body {
     -webkit-font-smoothing: antialiased;
-    background: #474C5F;
+    background: #F0F0F4;
   }
 
   body, input {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Raleway', sans-serif;
   }
 
   img {
-    max-height: 100%;
+    max-width: 100%;
   }
 
   button {
@@ -27,5 +27,9 @@ export default createGlobalStyle`
 
   a {
     text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
   }
 `;
