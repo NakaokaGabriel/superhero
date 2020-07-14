@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 10px 10px;
+  margin: 0 10px;
 
   @media screen and (min-width: 779px) {
-    margin: 20px auto;
+    margin: 0 auto;
   }
 
   @media screen and (min-width: 779px) and (max-width: 1024px) {
