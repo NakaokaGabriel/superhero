@@ -3,7 +3,7 @@ import React from 'react';
 // import { Container } from './styles';
 
 function Main() {
-  return <div />;
+  return <h1>Hello world</h1>;
 }
 
 export default Main;
