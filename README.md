@@ -2,7 +2,7 @@
 
 ### Install
 
-<b>npm install or yarn instal</b>
+<b>npm install or yarn install</b>
 
 ### Languages and depedencies
 
