@@ -1,12 +1,15 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MdClose } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 import api from '../../services/api';
 
 import { Wrapper, Container, Close } from './styles';
 
-function Modal({ openModal, setModal, heroId }) {
+function Modal({ openModal, setModal }) {
+  const heroId = useSelector(state => state.hero.heroId);
+
   const modalContent = useRef(null);
 
   const [heroInfo, setHeroInfo] = useState({});
@@ -67,7 +70,7 @@ function Modal({ openModal, setModal, heroId }) {
   return (
     <Wrapper modal={openModal} onClick={handleModal}>
       <Container ref={modalContent}>
-        <img src={heroInfo.image} alt="Hulk" />
+        <img src={heroInfo.image} alt={heroInfo.name} />
         <div className="content">
           <h3>{heroInfo.name}</h3>
 
@@ -125,11 +128,6 @@ function Modal({ openModal, setModal, heroId }) {
 Modal.propTypes = {
   openModal: PropTypes.bool.isRequired,
   setModal: PropTypes.func.isRequired,
-  heroId: PropTypes.string,
-};
-
-Modal.defaultProps = {
-  heroId: '',
 };
 
 export default Modal;

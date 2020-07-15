@@ -5,6 +5,12 @@ import React, {
   useLayoutEffect,
 } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useSelector, useDispatch } from 'react-redux';
+
+import {
+  searchHeroError,
+  searchHeroById,
+} from '../../store/modules/hero/actions';
 
 import api from '../../services/api';
 
@@ -15,24 +21,28 @@ function Content() {
   const [heroes, setHeroes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
-  const [heroId, setHeroId] = useState('');
+
+  const heroName = useSelector(state => state.hero.name);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadHeroes() {
-      try {
-        const response = await api.get(`/search/batman`);
+      const response = await api.get(`/search/${heroName || 'all'}`);
 
-        const data = [...response.data.results];
-
-        setLoading(false);
-        setHeroes(data);
-      } catch (err) {
-        setLoading(true);
+      if (response.data.response === 'error') {
+        dispatch(searchHeroError(response.data.error));
+        return;
       }
+
+      const data = [...response.data.results];
+
+      setLoading(false);
+      setHeroes(data);
     }
 
     loadHeroes();
-  }, []);
+  }, [heroName, dispatch]);
 
   useLayoutEffect(() => {
     if (modal) {
@@ -44,10 +54,13 @@ function Content() {
     };
   }, [modal]);
 
-  const handleModal = useCallback(id => {
-    setModal(true);
-    setHeroId(id);
-  }, []);
+  const handleModal = useCallback(
+    id => {
+      setModal(true);
+      dispatch(searchHeroById(id));
+    },
+    [dispatch],
+  );
 
   return (
     <>
@@ -59,7 +72,7 @@ function Content() {
         )}
         {heroes.map(hero => (
           <Heroes key={hero.id} onClick={() => handleModal(hero.id)}>
-            <img src={hero.image.url} alt="hero" />
+            <img src={hero.image.url} alt={hero.name} />
 
             <Description>
               <h2>{hero.name}</h2>
@@ -71,9 +84,7 @@ function Content() {
             </Description>
           </Heroes>
         ))}
-        {modal && (
-          <Modal openModal={modal} setModal={setModal} heroId={heroId} />
-        )}
+        {modal && <Modal openModal={modal} setModal={setModal} />}
       </Container>
     </>
   );
