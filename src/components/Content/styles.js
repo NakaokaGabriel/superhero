@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const loadAnimation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 export const Container = styled.div`
   margin: 40px 0;
@@ -8,6 +18,12 @@ export const Container = styled.div`
 
   @media screen and (min-width: 779px) {
     overflow: unset;
+  }
+
+  .loading {
+    width: 100%;
+    text-align: center;
+    animation: ${loadAnimation} 2s linear infinite;
   }
 `;
 
@@ -58,39 +74,6 @@ export const Description = styled.div`
 
     @media screen and (min-width: 1440px) {
       font-size: 28px;
-    }
-  }
-
-  .stats {
-    display: none;
-
-    @media screen and (min-width: 779px) {
-      display: block;
-      margin-top: 10px;
-
-      h4 {
-        font-weight: 300;
-        color: #474c5f;
-        font-size: 18px;
-      }
-
-      ul {
-        display: flex;
-        margin-top: 5px;
-
-        li {
-          text-align: center;
-
-          strong,
-          p {
-            color: #474c5f;
-          }
-        }
-
-        li + li {
-          margin-left: 15px;
-        }
-      }
     }
   }
 
