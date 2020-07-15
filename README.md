@@ -2,6 +2,14 @@
 
 ### Install
 
-<b>npm install</b>
-<br />
-<b>yarn install</b>
+<b>npm install or yarn instal</b>
+
+### Languages and depedencies
+
+<ul>
+  <li>React</li>
+  <li>Eslint</li>
+  <li>Prettier</li>
+  <li>Redux</li>
+  <li>Axios</li>
+</ul>
