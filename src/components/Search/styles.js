@@ -74,6 +74,7 @@ export const Container = styled.div`
         height: 40px;
         padding-left: 10px;
         color: #c4c4c4;
+        border: ${props => (props.error ? '2px solid #D53B49' : 'none')};
 
         @media screen and (min-width: 1024px) {
           height: 60px;
@@ -81,7 +82,7 @@ export const Container = styled.div`
         }
 
         &::placeholder {
-          color: #c4c4c4;
+          color: ${props => (props.error ? '#D53B49' : '#c4c4c4')};
 
           @media screen and (min-width: 1024px) {
             font-size: 16px;
@@ -105,10 +106,25 @@ export const Container = styled.div`
           left: 0;
           height: 70%;
           width: 1px;
-          background: #c4c4c4;
+          background: ${props => (props.error ? '#D53B49' : '#c4c4c4')};
           transform: translate3d(0, -50%, 0);
+        }
+
+        svg {
+          fill: ${props => (props.error ? '#D53B49' : '#c4c4c4')};
+          width: 62px;
+
+          @media screen and (min-width: 779px) {
+            width: 62px;
+          }
         }
       }
     }
+  }
+
+  span {
+    display: inline-block;
+    margin: 10px 0 0 5px;
+    color: #d53b49;
   }
 `;

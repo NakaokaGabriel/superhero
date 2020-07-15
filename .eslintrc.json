@@ -5,6 +5,7 @@
   },
   "extends": [
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "airbnb",
     "prettier",
     "prettier/react"
@@ -22,6 +23,8 @@
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "import/prefer-default-export": "off",
     "jsx-a11y/label-has-associated-control": "off",
-    "no-undef": "off"
+    "no-param-reassign": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
