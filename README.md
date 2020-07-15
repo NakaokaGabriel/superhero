@@ -2,8 +2,6 @@
 
 ### Install
 
-npm install
-or
-yarn
-
-
+<b>npm install</b>
+<br />
+<b>yarn install</b>
