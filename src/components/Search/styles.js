@@ -49,7 +49,7 @@ export const Container = styled.div`
   }
 
   form {
-    margin: 20px 0;
+    margin: 40px 0;
 
     h3 {
       color: #474c5f;
@@ -61,6 +61,10 @@ export const Container = styled.div`
       position: relative;
       overflow: hidden;
 
+      @media screen and (min-width: 1024px) {
+        margin-top: 15px;
+      }
+
       input {
         display: block;
         width: 100%;
@@ -69,9 +73,19 @@ export const Container = styled.div`
         border-radius: 4px;
         height: 40px;
         padding-left: 10px;
+        color: #c4c4c4;
+
+        @media screen and (min-width: 1024px) {
+          height: 60px;
+          font-size: 16px;
+        }
 
         &::placeholder {
           color: #c4c4c4;
+
+          @media screen and (min-width: 1024px) {
+            font-size: 16px;
+          }
         }
       }
 
@@ -94,37 +108,6 @@ export const Container = styled.div`
           background: #c4c4c4;
           transform: translate3d(0, -50%, 0);
         }
-      }
-    }
-  }
-`;
-
-export const Famous = styled.div`
-  margin: 20px 0;
-
-  h3 {
-    color: #474c5f;
-    font-size: 32px;
-  }
-
-  .heroes {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    overflow-x: scroll;
-    margin-top: 5px;
-
-    button {
-      border: none;
-      background: none;
-
-      & + button {
-        margin-left: 10px;
-      }
-
-      img {
-        border-radius: 4px;
-        max-width: 80px;
       }
     }
   }

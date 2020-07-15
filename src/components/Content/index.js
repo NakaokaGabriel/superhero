@@ -1,175 +1,81 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+
+import api from '../../services/api';
 
 import { Container, Heroes, Description } from './styles';
+import Modal from '../Modal';
 
 function Content() {
+  const [heroes, setHeroes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
+  const [heroId, setHeroId] = useState('');
+
+  useEffect(() => {
+    async function loadHeroes() {
+      try {
+        const response = await api.get(`/search/batman`);
+
+        const data = [...response.data.results];
+
+        setLoading(false);
+        setHeroes(data);
+      } catch (err) {
+        setLoading(true);
+      }
+    }
+
+    loadHeroes();
+  }, []);
+
+  useLayoutEffect(() => {
+    if (modal) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [modal]);
+
+  const handleModal = useCallback(id => {
+    setModal(true);
+    setHeroId(id);
+  }, []);
+
   return (
-    <Container>
-      <Heroes>
-        <img
-          src="https://www.superherodb.com/pictures2/portraits/10/100/10441.jpg"
-          alt="hero"
-        />
-
-        <Description>
-          <h2>Batman</h2>
-
-          <div className="stats">
-            <h4>Stats</h4>
-            <ul>
-              <li>
-                <strong>intelligence</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>strength</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>speed</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>durability</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>power</strong>
-                <p>90</p>
-              </li>
-            </ul>
+    <>
+      <Container>
+        {loading && (
+          <div className="loading">
+            <AiOutlineLoading3Quarters size={32} color="#474c5f" />
           </div>
+        )}
+        {heroes.map(hero => (
+          <Heroes key={hero.id} onClick={() => handleModal(hero.id)}>
+            <img src={hero.image.url} alt="hero" />
 
-          <div className="race">
-            <h4>Race</h4>
-            <span>Human</span>
-          </div>
-        </Description>
-      </Heroes>
-      <Heroes>
-        <img
-          src="https://www.superherodb.com/pictures2/portraits/10/100/807.jpg"
-          alt="hero"
-        />
+            <Description>
+              <h2>{hero.name}</h2>
 
-        <Description>
-          <h2>Batman</h2>
-
-          <div className="stats">
-            <h4>Stats</h4>
-            <ul>
-              <li>
-                <strong>intelligence</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>strength</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>speed</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>durability</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>power</strong>
-                <p>90</p>
-              </li>
-            </ul>
-          </div>
-
-          <div className="race">
-            <h4>Race</h4>
-            <span>Human</span>
-          </div>
-        </Description>
-      </Heroes>
-      <Heroes>
-        <img
-          src="https://www.superherodb.com/pictures2/portraits/10/100/85.jpg"
-          alt="hero"
-        />
-
-        <Description>
-          <h2>Batman</h2>
-
-          <div className="stats">
-            <h4>Stats</h4>
-            <ul>
-              <li>
-                <strong>intelligence</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>strength</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>speed</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>durability</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>power</strong>
-                <p>90</p>
-              </li>
-            </ul>
-          </div>
-
-          <div className="race">
-            <h4>Race</h4>
-            <span>Human</span>
-          </div>
-        </Description>
-      </Heroes>
-      <Heroes>
-        <img
-          src="https://www.superherodb.com/pictures2/portraits/10/100/83.jpg"
-          alt="hero"
-        />
-
-        <Description>
-          <h2>Batman</h2>
-
-          <div className="stats">
-            <h4>Stats</h4>
-            <ul>
-              <li>
-                <strong>intelligence</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>strength</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>speed</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>durability</strong>
-                <p>90</p>
-              </li>
-              <li>
-                <strong>power</strong>
-                <p>90</p>
-              </li>
-            </ul>
-          </div>
-
-          <div className="race">
-            <h4>Race</h4>
-            <span>Human</span>
-          </div>
-        </Description>
-      </Heroes>
-    </Container>
+              <div className="race">
+                <h4>Race</h4>
+                <span>{hero.appearance.race}</span>
+              </div>
+            </Description>
+          </Heroes>
+        ))}
+        {modal && (
+          <Modal openModal={modal} setModal={setModal} heroId={heroId} />
+        )}
+      </Container>
+    </>
   );
 }
 
